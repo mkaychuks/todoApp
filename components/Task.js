@@ -1,10 +1,10 @@
-import { StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 import React from "react";
 
 const Task = (props) => {
   return (
     // Main view holder
-    <View style={styles.item}>
+    <Pressable style={styles.item} onPress={props.onDeleteTask.bind(this, props.id)}>
       {/* The view that will house the left elements */}
       <View style={styles.itemLeft}>
         <View style={styles.square}></View>
@@ -12,7 +12,7 @@ const Task = (props) => {
       </View>
 
       <View style={styles.circular}></View>
-    </View>
+    </Pressable>
   );
 };
 

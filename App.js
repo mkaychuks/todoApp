@@ -20,10 +20,18 @@ export default function App() {
   const [task, setTask] = useState("");
   const [taskItems, setTaskItems] = useState([]);
 
+  // handle adding of tasks
   const handleAddTask = () => {
     Keyboard.dismiss();
-    setTaskItems((newTaskItems) => [...newTaskItems, { title: task }]);
+    setTaskItems((newTaskItems) => [...newTaskItems, { title: task, id: Math.random().toString()}]);
     setTask("");
+  };
+
+  // delete tasks
+  const completeTask = (id) => {
+    setTaskItems(currentTask => {
+      return currentTask.filter((task) => task.id !== id)
+    })
   };
 
   return (
@@ -39,13 +47,17 @@ export default function App() {
         <View style={styles.items}>
           {/* This is where the tasks will go */}
           <FlatList
-            keyExtractor={(_, index) => index.toString()}
+            keyExtractor={(item, index) => {return item.id}}
             data={taskItems}
-            renderItem={({ item }) => <Task text={item.title} />}
+            renderItem={({ item }) => (
+              <Task
+                text={item.title}
+                onDeleteTask={completeTask}
+                id={item.id}
+              />
+            )}
             alwaysBounceVertical={false}
           />
-
-          {/* <Task text={"Wash the clothes"} /> */}
         </View>
       </View>
 
