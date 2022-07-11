@@ -17,9 +17,12 @@ export default function App() {
         {/* Wraps the tasks items */}
         <View style={styles.items}>
           {/* This is where the tasks will go */}
-          <Task />
+          <Task text={"Hello world"}/>
+          <Task text={"Wash the clothes"}/>
         </View>
       </View>
+
+      {/*  */}
     </View>
   );
 }
@@ -37,5 +40,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold'
   },
-  items: {},
+  items: {
+    marginTop: 30
+  },
 });
