@@ -9,6 +9,7 @@ import {
   TextInput,
   TouchableOpacity,
   FlatList,
+  Keyboard,
 } from "react-native";
 
 // local imports
@@ -20,6 +21,7 @@ export default function App() {
   const [taskItems, setTaskItems] = useState([]);
 
   const handleAddTask = () => {
+    Keyboard.dismiss();
     setTaskItems((newTaskItems) => [...newTaskItems, { title: task }]);
     setTask("");
   };
