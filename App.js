@@ -23,15 +23,18 @@ export default function App() {
   // handle adding of tasks
   const handleAddTask = () => {
     Keyboard.dismiss();
-    setTaskItems((newTaskItems) => [...newTaskItems, { title: task, id: Math.random().toString()}]);
+    setTaskItems((newTaskItems) => [
+      ...newTaskItems,
+      { title: task, id: Math.random().toString() },
+    ]);
     setTask("");
   };
 
   // delete tasks
   const completeTask = (id) => {
-    setTaskItems(currentTask => {
-      return currentTask.filter((task) => task.id !== id)
-    })
+    setTaskItems((currentTask) => {
+      return currentTask.filter((task) => task.id !== id);
+    });
   };
 
   return (
@@ -47,7 +50,9 @@ export default function App() {
         <View style={styles.items}>
           {/* This is where the tasks will go */}
           <FlatList
-            keyExtractor={(item, index) => {return item.id}}
+            keyExtractor={(item, index) => {
+              return item.id;
+            }}
             data={taskItems}
             renderItem={({ item }) => (
               <Task
