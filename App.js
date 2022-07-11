@@ -1,4 +1,5 @@
 import { StatusBar } from "expo-status-bar";
+import React, { useState } from "react";
 import {
   KeyboardAvoidingView,
   StyleSheet,
@@ -7,12 +8,22 @@ import {
   Platform,
   TextInput,
   TouchableOpacity,
+  FlatList,
 } from "react-native";
 
 // local imports
 import Task from "./components/Task";
 
 export default function App() {
+  // handle states
+  const [task, setTask] = useState("");
+  const [taskItems, setTaskItems] = useState([]);
+
+  const handleAddTask = () => {
+    setTaskItems((newTaskItems) => [...newTaskItems, { title: task }]);
+    setTask("");
+  };
+
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
@@ -25,8 +36,14 @@ export default function App() {
         {/* Wraps the tasks items */}
         <View style={styles.items}>
           {/* This is where the tasks will go */}
-          <Task text={"Hello world"} />
-          <Task text={"Wash the clothes"} />
+          <FlatList
+            keyExtractor={(_, index) => index.toString()}
+            data={taskItems}
+            renderItem={({ item }) => <Task text={item.title} />}
+            alwaysBounceVertical={false}
+          />
+
+          {/* <Task text={"Wash the clothes"} /> */}
         </View>
       </View>
 
@@ -35,8 +52,13 @@ export default function App() {
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         style={styles.writeTaskWrapper}
       >
-        <TextInput placeholder="Write a Task" style={styles.input} />
-        <TouchableOpacity>
+        <TextInput
+          placeholder="Write a Task"
+          style={styles.input}
+          onChangeText={(text) => setTask(text)}
+          value={task}
+        />
+        <TouchableOpacity onPress={() => handleAddTask()}>
           <View style={styles.addWrapper}>
             <Text style={styles.addText}>+</Text>
           </View>
@@ -63,34 +85,34 @@ const styles = StyleSheet.create({
     marginTop: 30,
   },
   writeTaskWrapper: {
-    position: 'absolute',
-    bottom:55,
-    width: '100%',
-    flexDirection:'row',
+    position: "absolute",
+    bottom: 55,
+    width: "100%",
+    flexDirection: "row",
     justifyContent: "space-around",
-    alignItems:"center"
+    alignItems: "center",
   },
   input: {
     paddingVertical: 15,
-    width: '80%',
+    width: "80%",
     paddingHorizontal: 15,
-    backgroundColor: 'white',
+    backgroundColor: "white",
     borderRadius: 30,
     borderWidth: 1,
-    borderColor: '#c0c0c0'
+    borderColor: "#c0c0c0",
   },
   addWrapper: {
     width: 60,
     height: 60,
-    backgroundColor: 'white',
+    backgroundColor: "white",
     borderRadius: 60,
     justifyContent: "center",
     alignItems: "center",
     borderWidth: 1,
-    borderColor: '#c0c0c0'
+    borderColor: "#c0c0c0",
   },
   addText: {
     fontSize: 15,
-    fontWeight: "bold"
+    fontWeight: "bold",
   },
 });
