@@ -10,6 +10,7 @@ import {
   TouchableOpacity,
   FlatList,
   Keyboard,
+  Alert,
 } from "react-native";
 
 // local imports
@@ -37,6 +38,14 @@ export default function App() {
     });
   };
 
+  // confirm deleting at item
+  const confirmDelete = () => {
+    Alert.alert(title="Warning", message="Are you sure you want to delete this task", [
+      {text: "Yes",  onPress: () => console.warn('Yes pressed') },
+      {text: "No",  onPress: () => console.warn('No pressed') }
+    ])
+  }
+
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
@@ -57,7 +66,7 @@ export default function App() {
             renderItem={({ item }) => (
               <Task
                 text={item.title}
-                onDeleteTask={completeTask}
+                onDeleteTask={confirmDelete}
                 id={item.id}
               />
             )}
