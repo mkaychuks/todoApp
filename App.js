@@ -11,6 +11,7 @@ import {
   FlatList,
   Keyboard,
   Alert,
+  ToastAndroid,
 } from "react-native";
 
 // local imports
@@ -31,20 +32,24 @@ export default function App() {
     setTask("");
   };
 
-  // delete tasks
-  const completeTask = (id) => {
-    setTaskItems((currentTask) => {
-      return currentTask.filter((task) => task.id !== id);
-    });
+  // delete a task
+  const taskComplete = (id) => {
+    Alert.alert(
+      "Warning",
+      "Are you sure you want to delete this task",
+      [
+        {
+          text: "Yes",
+          onPress: () =>
+            setTaskItems((currentTask) => {
+              return currentTask.filter((task) => task.id !== id);
+            }),
+        },
+        { text: "No", onPress: () => ToastAndroid.show("Cancelled", ToastAndroid.SHORT) },
+      ],
+      { cancelable: true }
+    );
   };
-
-  // confirm deleting at item
-  const confirmDelete = () => {
-    Alert.alert(title="Warning", message="Are you sure you want to delete this task", [
-      {text: "Yes",  onPress: () => console.warn('Yes pressed') },
-      {text: "No",  onPress: () => console.warn('No pressed') }
-    ])
-  }
 
   return (
     <View style={styles.container}>
@@ -66,7 +71,7 @@ export default function App() {
             renderItem={({ item }) => (
               <Task
                 text={item.title}
-                onDeleteTask={confirmDelete}
+                onDeleteTask={taskComplete}
                 id={item.id}
               />
             )}
