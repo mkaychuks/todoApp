@@ -4,7 +4,10 @@ import React from "react";
 const Task = (props) => {
   return (
     // Main view holder
-    <Pressable style={styles.item} onPress={props.onDeleteTask.bind(this, props.id)}>
+    <Pressable
+      style={styles.item}
+      onPress={props.onDeleteTask.bind(this, props.id)}
+    >
       {/* The view that will house the left elements */}
       <View style={styles.itemLeft}>
         <View style={styles.square}></View>
@@ -20,35 +23,35 @@ export default Task;
 
 const styles = StyleSheet.create({
   item: {
-    backgroundColor: 'white',
+    backgroundColor: "white",
     padding: 15,
     borderRadius: 10,
     flexDirection: "row",
-    alignItems: 'center',
+    alignItems: "center",
     justifyContent: "space-between",
-    marginBottom: 15
+    marginBottom: 15,
   },
   itemLeft: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    flexWrap: "wrap"
+    flexDirection: "row",
+    alignItems: "center",
+    flexWrap: "wrap",
   },
   square: {
     width: 24,
     height: 24,
-    backgroundColor: '#55bcf6',
+    backgroundColor: "#55bcf6",
     opacity: 0.4,
     borderRadius: 5,
-    marginRight: 15
+    marginRight: 15,
   },
   itemText: {
-    maxWidth: '80%'
+    maxWidth: "80%",
   },
   circular: {
     width: 12,
     height: 12,
-    borderColor: '#55bcf6',
+    borderColor: "#55bcf6",
     borderRadius: 12,
-    borderWidth: 2
+    borderWidth: 2,
   },
 });

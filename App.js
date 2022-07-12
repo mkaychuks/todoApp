@@ -45,7 +45,10 @@ export default function App() {
               return currentTask.filter((task) => task.id !== id);
             }),
         },
-        { text: "No", onPress: () => ToastAndroid.show("Cancelled", ToastAndroid.SHORT) },
+        {
+          text: "No",
+          onPress: () => ToastAndroid.show("Cancelled", ToastAndroid.SHORT),
+        },
       ],
       { cancelable: true }
     );
