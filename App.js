@@ -12,6 +12,7 @@ import {
   Keyboard,
   Alert,
   ToastAndroid,
+  Dimensions,
 } from "react-native";
 
 // local imports
@@ -78,7 +79,7 @@ export default function App() {
                 id={item.id}
               />
             )}
-            alwaysBounceVertical={false}
+            showsVerticalScrollIndicator={false}
           />
         </View>
       </View>
@@ -106,7 +107,8 @@ export default function App() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    width: Dimensions.get("window").width,
+    height: Dimensions.get("window").height,
     backgroundColor: "#E8EAED",
   },
   tasksWrapper: {
@@ -122,7 +124,7 @@ const styles = StyleSheet.create({
   },
   writeTaskWrapper: {
     position: "absolute",
-    bottom: 55,
+    bottom: 20,
     width: "100%",
     flexDirection: "row",
     justifyContent: "space-around",
