@@ -1,5 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   KeyboardAvoidingView,
   StyleSheet,
@@ -12,8 +12,8 @@ import {
   Keyboard,
   Alert,
   ToastAndroid,
-  Dimensions,
 } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 // local imports
 import Task from "./components/Task";
@@ -22,6 +22,36 @@ export default function App() {
   // handle states
   const [task, setTask] = useState("");
   const [taskItems, setTaskItems] = useState([]);
+
+  useEffect(() => {
+    getAllTasksFromDevice()
+  }, [])
+
+  useEffect(() => {
+    saveTaskToUserDevice(taskItems)
+  }, [taskItems])
+
+
+  const saveTaskToUserDevice =  async (tasks) => {
+    try {
+      const stringifyTasks = JSON.stringify(tasks)
+      await AsyncStorage.setItem('tasks', stringifyTasks)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const getAllTasksFromDevice = async () => {
+    try {
+      const tasks = await AsyncStorage.getItem("tasks")
+      if(tasks != null){
+        setTaskItems(JSON.parse(tasks))
+      }
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
 
   // handle adding of tasks
   const handleAddTask = () => {
@@ -107,8 +137,7 @@ export default function App() {
 
 const styles = StyleSheet.create({
   container: {
-    width: Dimensions.get("window").width,
-    height: Dimensions.get("window").height,
+    flex: 1,
     backgroundColor: "#E8EAED",
   },
   tasksWrapper: {
