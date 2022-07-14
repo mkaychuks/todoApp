@@ -23,44 +23,46 @@ export default function App() {
   const [task, setTask] = useState("");
   const [taskItems, setTaskItems] = useState([]);
 
+  // pull all the tasks from storage on app load
   useEffect(() => {
-    getAllTasksFromDevice()
-  }, [])
+    getAllTasksFromDevice();
+  }, []);
 
+  // save added tasks to local storage and render UI with made changes
   useEffect(() => {
-    saveTaskToUserDevice(taskItems)
-  }, [taskItems])
+    saveTaskToUserDevice(taskItems); // takes the "taskItem" state and save to local storage
+  }, [taskItems]);
 
-
-  const saveTaskToUserDevice =  async (tasks) => {
+  // function to save tasks to local storage
+  const saveTaskToUserDevice = async (tasks) => {
+    // passing an arg..
     try {
-      const stringifyTasks = JSON.stringify(tasks)
-      await AsyncStorage.setItem('tasks', stringifyTasks)
+      const stringifyTasks = JSON.stringify(tasks); // stringify the passed arg in the case "tasks"
+      await AsyncStorage.setItem("tasks", stringifyTasks); // passing a key: 'task' and value: stringifyTask to the "setItem" func from asyncstorage
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
 
   const getAllTasksFromDevice = async () => {
     try {
-      const tasks = await AsyncStorage.getItem("tasks")
-      if(tasks != null){
-        setTaskItems(JSON.parse(tasks))
+      const tasks = await AsyncStorage.getItem("tasks"); // get all items in storage with the key "tasks"
+      if (tasks != null) {
+        setTaskItems(JSON.parse(tasks)); // parse it to a JSON object and pass it to "setTaskItems" state
       }
     } catch (e) {
-      console.log(e)
+      console.log(e);
     }
-  }
-
+  };
 
   // handle adding of tasks
   const handleAddTask = () => {
-    Keyboard.dismiss();
+    Keyboard.dismiss(); // dismiss the keyboard after the text is entered
     setTaskItems((newTaskItems) => [
-      ...newTaskItems,
-      { title: task, id: Math.random().toString() },
+      ...newTaskItems, 
+      { title: task, id: Math.random().toString() }, 
     ]);
-    setTask("");
+    setTask(""); // set the task back to "" 
   };
 
   // delete a task
@@ -73,7 +75,7 @@ export default function App() {
           text: "Yes",
           onPress: () =>
             setTaskItems((currentTask) => {
-              return currentTask.filter((task) => task.id !== id);
+              return currentTask.filter((task) => task.id !== id); // filter the list and return a list excluding the one with the ID passd.
             }),
         },
         {
